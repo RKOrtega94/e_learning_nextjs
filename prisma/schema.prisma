@@ -48,12 +48,39 @@ model UserRoles {
 }
 
 model Classroom {
-  id        String    @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
   capacity  Int?
   code      String
-  status    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  cover     String?
+  status    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   deletedAt DateTime?
+  Resource  Resource[]
+}
+
+model ResourceType {
+  id        String     @id @default(uuid())
+  name      String
+  icon      String
+  state     Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  deletedAt DateTime?
+  Resource  Resource[]
+}
+
+model Resource {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  type        ResourceType @relation(fields: [typeId], references: [id])
+  typeId      String
+  classroom   Classroom    @relation(fields: [classroomId], references: [id])
+  classroomId String
+  status      Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  deletedAt   DateTime?
 }
