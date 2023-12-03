@@ -23,9 +23,17 @@ export async function GET(request: Request, { params }: Params) {
         status: 404,
       });
 
-    return NextResponse.json(
-      SuccessResponse.json("Classroom retrieved", classroom)
-    );
+    // Get resources from classroom
+    const resources = await prisma.resource.findMany({
+      where: { classroomId: id },
+    });
+
+    const data = {
+      ...classroom,
+      resources: resources,
+    };
+
+    return NextResponse.json(SuccessResponse.json("Classroom retrieved", data));
   } catch (error: any) {
     return NextResponse.json(
       ErrorResponse.json("Error getting classroom", [error.message]),
