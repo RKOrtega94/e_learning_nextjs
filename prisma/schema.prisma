@@ -61,14 +61,15 @@ model Classroom {
 }
 
 model ResourceType {
-  id        String     @id @default(uuid())
-  name      String
-  icon      String
-  state     Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  deletedAt DateTime?
-  Resource  Resource[]
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  icon        String?
+  state       Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+  Resource    Resource[]
 }
 
 model Resource {
