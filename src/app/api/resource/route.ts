@@ -8,7 +8,6 @@ import { prisma } from "@/libs/prisma";
 export async function GET() {
   try {
     const resources = await prisma.resource.findMany();
-    console.log(resources);
 
     return NextResponse.json(
       SuccessResponse.json("Resources retrieved", resources)
@@ -25,8 +24,6 @@ export async function POST(request: Request) {
   try {
     const { resourceType, classroomId, name, description } =
       await request.json();
-
-    console.log(resourceType, classroomId, name, description);
 
     // Check if resource type exists
     const resourceTypeExists = await prisma.resourceType.findUnique({
@@ -64,8 +61,6 @@ export async function POST(request: Request) {
         typeId: resourceType,
       },
     });
-
-    console.log(newResource);
 
     return NextResponse.json(
       SuccessResponse.json("Resource created", newResource)
