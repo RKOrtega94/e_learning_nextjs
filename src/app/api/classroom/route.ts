@@ -5,6 +5,7 @@ import {
   SuccessResponse,
   ErrorResponse,
 } from "@/interfaces/response.interface";
+import { parseFileToBase64 } from "@/libs/image_parsr";
 
 /**
  * GET /api/classroom
@@ -18,7 +19,12 @@ export async function GET(request: NextRequest) {
 
     const page = Number(url.searchParams.get("page")) || 1;
 
-    const classrooms = await prisma.classroom.findMany();
+    // Get classrooms with resources
+    const classrooms = await prisma.classroom.findMany({
+      include: {
+        Resource: true,
+      },
+    });
 
     return NextResponse.json(
       SuccessResponse.json("Classrooms retrieved", classrooms)
@@ -40,15 +46,30 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: Request) {
   try {
-    const { name, capacity } = await request.json();
-    const code = generateCode();
+    const data = await request.formData();
+    const image = data.get("image");
 
-    const newClassroom = await prisma.classroom.create({
-      data: { name, capacity, code },
+    const name = data.get("name")?.toString() || "";
+    // capacity parse to int
+    const capacity = data.get("capacity")?.toString() || "";
+
+    let cover = null;
+
+    if (image) {
+      cover = await parseFileToBase64(image);
+    }
+
+    const classroom = await prisma.classroom.create({
+      data: {
+        code: generateCode(),
+        name: name,
+        capacity: Number(capacity),
+        cover: cover,
+      },
     });
 
     return NextResponse.json(
-      SuccessResponse.json("Classroom created", newClassroom)
+      SuccessResponse.json("Classroom created", classroom)
     );
   } catch (error: any) {
     return NextResponse.json(

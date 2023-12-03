@@ -58,6 +58,8 @@ model Classroom {
   updatedAt DateTime   @updatedAt
   deletedAt DateTime?
   Resource  Resource[]
+
+  @@unique([name, code], name: "classroom_unique")
 }
 
 model ResourceType {
