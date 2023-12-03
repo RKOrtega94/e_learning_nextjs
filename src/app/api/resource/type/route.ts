@@ -5,11 +5,10 @@ import {
   ErrorResponse,
 } from "@/interfaces/response.interface";
 
-const type = prisma.resourceType;
-
 export async function GET() {
   try {
-    const types = prisma.resourceType.findMany();
+    const types = await prisma.resourceType.findMany();
+    console.log(types);
 
     return NextResponse.json(SuccessResponse.json("Types retrieved", types));
   } catch (error: any) {
