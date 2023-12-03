@@ -8,7 +8,6 @@ import {
 export async function GET() {
   try {
     const types = await prisma.resourceType.findMany();
-    console.log(types);
 
     return NextResponse.json(SuccessResponse.json("Types retrieved", types));
   } catch (error: any) {
@@ -22,8 +21,6 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const { name, description, icon } = await request.json();
-
-    console.log(name, description, icon);
 
     const newType = await prisma.resourceType.create({
       data: { name, description, icon },
