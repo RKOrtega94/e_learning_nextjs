@@ -32,12 +32,13 @@ model RolePermission {
 }
 
 model User {
-  id        String @id @default(uuid())
+  id        String     @id @default(uuid())
   firstName String
   lastName  String
-  email     String @unique
-  document  String @unique
+  email     String     @unique
+  document  String     @unique
   password  String
+  Students  Students[]
 }
 
 model UserRoles {
@@ -57,7 +58,8 @@ model Classroom {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   deletedAt DateTime?
-  Resource  Resource[]
+  resources Resource[]
+  students  Students[]
 
   @@unique([name, code], name: "classroom_unique")
 }
@@ -71,7 +73,7 @@ model ResourceType {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   deletedAt   DateTime?
-  Resource    Resource[]
+  resource    Resource[]
 }
 
 model Resource {
@@ -89,4 +91,13 @@ model Resource {
 
   @@unique([typeId, classroomId], name: "resource_unique")
   @@index([typeId], name: "typeId")
+}
+
+model Students {
+  id          String    @id @default(uuid())
+  classroom   Classroom @relation(fields: [classroomId], references: [id])
+  classroomId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  status      Boolean   @default(true)
 }

@@ -19,10 +19,10 @@ export async function GET(request: NextRequest) {
 
     const page = Number(url.searchParams.get("page")) || 1;
 
-    // Get classrooms with resources
     const classrooms = await prisma.classroom.findMany({
       include: {
-        Resource: true,
+        resources: true,
+        students: true,
       },
     });
 
@@ -46,6 +46,8 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: Request) {
   try {
+    console.log("POST");
+
     const data = await request.formData();
     const image = data.get("image");
 
@@ -67,6 +69,8 @@ export async function POST(request: Request) {
         cover: cover,
       },
     });
+
+    console.log(classroom);
 
     return NextResponse.json(
       SuccessResponse.json("Classroom created", classroom)
