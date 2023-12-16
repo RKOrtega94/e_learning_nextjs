@@ -51,8 +51,6 @@ export async function POST(request: Request) {
     const data = await request.formData();
     const image = data.get("file");
 
-    console.log(image);
-
     const name = data.get("name")?.toString() || "";
     // capacity parse to int
     const capacity = data.get("capacity")?.toString() || "";
