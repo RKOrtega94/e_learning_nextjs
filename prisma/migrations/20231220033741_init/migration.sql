@@ -69,6 +69,7 @@ CREATE TABLE "Resource" (
     "description" TEXT,
     "typeId" TEXT NOT NULL,
     "classroomId" TEXT NOT NULL,
+    "path" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,

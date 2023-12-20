@@ -4,6 +4,7 @@ import {
   SuccessResponse,
   ErrorResponse,
 } from "@/interfaces/response.interface";
+import { parseFileToBase64 } from "@/libs/image_parsr";
 
 export async function GET() {
   try {
@@ -20,10 +21,24 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { name, description, icon } = await request.json();
+    const data = await request.formData();
+    const image = data.get("file");
+
+    let icon = null;
+
+    if (image) {
+      icon = await parseFileToBase64(image);
+    }
+
+    const name = data.get("name")?.toString() || "";
+    const description = data.get("description")?.toString() || "";
 
     const newType = await prisma.resourceType.create({
-      data: { name, description, icon },
+      data: {
+        name,
+        description,
+        icon,
+      },
     });
 
     return NextResponse.json(SuccessResponse.json("Type created", newType));

@@ -46,8 +46,6 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: Request) {
   try {
-    console.log("POST");
-
     const data = await request.formData();
     const image = data.get("file");
 
@@ -69,8 +67,6 @@ export async function POST(request: Request) {
         cover: cover,
       },
     });
-
-    console.log(classroom);
 
     return NextResponse.json(
       SuccessResponse.json("Classroom created", classroom)

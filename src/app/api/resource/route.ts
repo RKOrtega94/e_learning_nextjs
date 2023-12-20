@@ -5,6 +5,8 @@ import {
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
+import { loadFile } from "@/services/file.service";
+
 export async function GET() {
   try {
     const resources = await prisma.resource.findMany();
@@ -22,36 +24,25 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { resourceType, classroomId, name, description } =
-      await request.json();
+    const data = await request.formData();
+    const file = data.get("file");
 
-    // Check if resource type exists
-    const resourceTypeExists = await prisma.resourceType.findUnique({
-      where: { id: resourceType },
+    console.log(data);
+    console.log(file);
+
+    const name = data.get("name")?.toString() || "";
+    const description = data.get("description")?.toString() || "";
+    const classroomId = data.get("classroomId")?.toString() || "";
+    const resourceType = data.get("typeId")?.toString() || "";
+
+    const _file: File = file as File;
+
+    console.log({
+      name,
+      description,
+      classroomId,
+      typeId: resourceType,
     });
-
-    if (!resourceTypeExists) {
-      return NextResponse.json(
-        ErrorResponse.json("Resource type does not exist", [
-          "Resource type does not exist",
-        ]),
-        { status: 400 }
-      );
-    }
-
-    // Check if classroom exists
-    const classroomExists = await prisma.classroom.findUnique({
-      where: { id: classroomId },
-    });
-
-    if (!classroomExists) {
-      return NextResponse.json(
-        ErrorResponse.json("Classroom does not exist", [
-          "Classroom does not exist",
-        ]),
-        { status: 400 }
-      );
-    }
 
     const newResource = await prisma.resource.create({
       data: {
@@ -62,8 +53,27 @@ export async function POST(request: Request) {
       },
     });
 
+    const path: string = await loadFile({
+      file: _file,
+      name: newResource.id,
+      path: "resources",
+    });
+
+    console.log(path);
+
+    const updatedResource = await prisma.resource.update({
+      where: {
+        id: newResource.id,
+      },
+      data: {
+        path: path,
+      },
+    });
+
+    console.log(updatedResource);
+
     return NextResponse.json(
-      SuccessResponse.json("Resource created", newResource)
+      SuccessResponse.json("Resource created", updatedResource)
     );
   } catch (error: any) {
     return NextResponse.json(
