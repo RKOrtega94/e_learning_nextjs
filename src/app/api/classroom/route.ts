@@ -4,15 +4,15 @@ import { prisma } from "@/libs/prisma";
 import {
   SuccessResponse,
   ErrorResponse,
-} from "@/interfaces/response.interface";
-import { parseFileToBase64 } from "@/libs/image_parsr";
+} from "@/data/interfaces/response.interface";
+import { parseFileToBase64 } from "@/libs/image_parse";
 
 /**
  * GET /api/classroom
  *
  * @returns {NextResponse}
  */
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // get page from query params
     const url = new URL(request.url);
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
  *
  * @returns {NextResponse}
  */
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   try {
     const data = await request.formData();
     const image = data.get("file");

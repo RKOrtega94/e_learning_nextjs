@@ -3,7 +3,7 @@ import { prisma } from "@/libs/prisma";
 import {
   SuccessResponse,
   ErrorResponse,
-} from "@/interfaces/response.interface";
+} from "@/data/interfaces/response.interface";
 
 interface Params {
   params: {
@@ -11,7 +11,10 @@ interface Params {
   };
 }
 
-export async function GET(request: Request, { params }: Params) {
+export async function GET(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const { id } = params;
 
@@ -38,7 +41,10 @@ export async function GET(request: Request, { params }: Params) {
   }
 }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const { id } = params;
     const { name } = await request.json();
@@ -71,7 +77,10 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const { id } = params;
 

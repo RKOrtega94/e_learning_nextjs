@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -98,4 +98,64 @@ model Students {
   user        User      @relation(fields: [userId], references: [id])
   userId      String
   status      Boolean   @default(true)
+}
+
+model Questionnaire {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  status      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  deletedAt   DateTime?
+  questions   Question[]
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  SINGLE_CHOICE
+  TRUE_FALSE
+  LONG_TEXT
+  SHORT_TEXT
+  ORDER
+  WORD_FINDER
+  MATCHINGF
+}
+
+model Question {
+  id             String        @id @default(uuid())
+  question       String
+  type           QuestionType
+  questionaire   Questionnaire @relation(fields: [questionaireId], references: [id])
+  questionaireId String
+  options        Option[]
+  answers        Answer[]
+  status         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+}
+
+model Option {
+  id         Int       @id @default(autoincrement())
+  option     String
+  question   Question  @relation(fields: [questionId], references: [id])
+  questionId String
+  status     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  Answer     Answer[]
+}
+
+model Answer {
+  id         Int       @id @default(autoincrement())
+  optionId   Int
+  option     Option    @relation(fields: [optionId], references: [id])
+  status     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  Question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
 }

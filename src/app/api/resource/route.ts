@@ -1,13 +1,13 @@
 import {
   ErrorResponse,
   SuccessResponse,
-} from "@/interfaces/response.interface";
+} from "@/data/interfaces/response.interface";
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
-import { loadFile } from "@/services/file.service";
+import { loadFile } from "@/presentation/services/file.service";
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const resources = await prisma.resource.findMany();
 
@@ -22,12 +22,11 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   try {
     const data = await request.formData();
     const file = data.get("file");
 
-    console.log(data);
     console.log(file);
 
     const name = data.get("name")?.toString() || "";
@@ -59,8 +58,6 @@ export async function POST(request: Request) {
       path: "resources",
     });
 
-    console.log(path);
-
     const updatedResource = await prisma.resource.update({
       where: {
         id: newResource.id,
@@ -69,8 +66,6 @@ export async function POST(request: Request) {
         path: path,
       },
     });
-
-    console.log(updatedResource);
 
     return NextResponse.json(
       SuccessResponse.json("Resource created", updatedResource)

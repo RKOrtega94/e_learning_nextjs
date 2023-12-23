@@ -3,10 +3,10 @@ import { prisma } from "@/libs/prisma";
 import {
   SuccessResponse,
   ErrorResponse,
-} from "@/interfaces/response.interface";
-import { parseFileToBase64 } from "@/libs/image_parsr";
+} from "@/data/interfaces/response.interface";
+import { parseFileToBase64 } from "@/libs/image_parse";
 
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const types = await prisma.resourceType.findMany();
 
@@ -19,7 +19,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request): Promise<NextResponse> {
   try {
     const data = await request.formData();
     const image = data.get("file");
