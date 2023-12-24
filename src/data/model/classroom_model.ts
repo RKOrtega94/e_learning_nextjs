@@ -1,26 +1,26 @@
 import { IClassroom } from "@interface/_interfaces";
 
-export class ClassroomModel implements IClassroom {
+export default class ClassroomModel implements IClassroom {
   id: string;
   name: string;
-  capacity: number;
+  capacity: number | null;
   code: string;
-  cover: string;
+  cover: string | null;
   status: boolean;
   createdAt: Date;
   updatedAt: Date;
-  deletedAt: Date;
+  deletedAt: Date | null;
 
   constructor(
     id: string,
     name: string,
-    capacity: number,
+    capacity: number | null,
     code: string,
-    cover: string,
+    cover: string | null,
     status: boolean,
     createdAt: Date,
     updatedAt: Date,
-    deletedAt: Date
+    deletedAt: Date | null
   ) {
     this.id = id;
     this.name = name;

@@ -6,6 +6,14 @@ import {
   ErrorResponse,
 } from "@/data/interfaces/response.interface";
 import { parseFileToBase64 } from "@/libs/image_parse";
+import { Classroom } from "@model/_model";
+import { GetAllClassroom } from "@/data/use_cases/_use_cases";
+import ClassroomRepository from "@/data/repository/classroom_repository";
+import ClassroomDataSource from "@/data/data_source/classroom_data_source";
+
+const getAll = new GetAllClassroom(
+  new ClassroomRepository(new ClassroomDataSource())
+);
 
 /**
  * GET /api/classroom
@@ -14,21 +22,11 @@ import { parseFileToBase64 } from "@/libs/image_parse";
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    // get page from query params
-    const url = new URL(request.url);
+    let classrooms: Classroom[] = [];
 
-    const page = Number(url.searchParams.get("page")) || 1;
+    classrooms = await getAll.execute();
 
-    const classrooms = await prisma.classroom.findMany({
-      include: {
-        resources: true,
-        students: true,
-      },
-    });
-
-    return NextResponse.json(
-      SuccessResponse.json("Classrooms retrieved", classrooms)
-    );
+    return NextResponse.json(SuccessResponse.json("Classrooms", classrooms));
   } catch (error: any) {
     return NextResponse.json(
       ErrorResponse.json("Error getting classrooms", [error.message]),
