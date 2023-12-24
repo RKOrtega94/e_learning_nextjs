@@ -24,7 +24,42 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-  } catch (error) {}
+    const data = await request.formData();
+
+    const name = data.get("name")?.toString() || "";
+    const description = data.get("description")?.toString() || "";
+    const classroomId = data.get("classroomId")?.toString() || "";
+
+    const classroom = await prisma.classroom.findUnique({
+      where: {
+        id: classroomId,
+      },
+    });
+
+    if (!classroom) {
+      return NextResponse.json(
+        ErrorResponse.json("Classroom not found", ["Classroom not found"]),
+        { status: 404 }
+      );
+    }
+
+    const questionnaire = await prisma.questionnaire.create({
+      data: {
+        name: name,
+        description: description,
+        classroomId: classroomId,
+      },
+    });
+
+    return NextResponse.json(
+      SuccessResponse.json("Questionnaire created", questionnaire)
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      ErrorResponse.json("Error creating classroom", [error.message]),
+      { status: 500 }
+    );
+  }
 }

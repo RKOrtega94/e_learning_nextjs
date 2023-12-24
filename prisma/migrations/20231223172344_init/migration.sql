@@ -111,6 +111,7 @@ CREATE TABLE "Questionnaire" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "deletedAt" TIMESTAMP(3),
+    "classroomId" TEXT NOT NULL,
 
     CONSTRAINT "Questionnaire_pkey" PRIMARY KEY ("id")
 );
@@ -184,6 +185,9 @@ ALTER TABLE "Students" ADD CONSTRAINT "Students_classroomId_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "Students" ADD CONSTRAINT "Students_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Questionnaire" ADD CONSTRAINT "Questionnaire_classroomId_fkey" FOREIGN KEY ("classroomId") REFERENCES "Classroom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_questionaireId_fkey" FOREIGN KEY ("questionaireId") REFERENCES "Questionnaire"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
