@@ -13,7 +13,7 @@ export default class QuestionnaireRepository
   }
 
   getAll(): Promise<Questionnaire[]> {
-    throw new Error("Method not implemented.");
+    return this._ds.getAll();
   }
   create(questionnaire: Questionnaire): Promise<Questionnaire> {
     return this._ds.create(questionnaire);

@@ -13,19 +13,7 @@ export default class ClassroomDataSource implements IClassroomDataSource {
     const classrooms: Classroom[] = [];
     const data = await this.prisma.classroom.findMany();
 
-    data.forEach((classroom) =>
-      classrooms.push({
-        id: classroom.id,
-        name: classroom.name,
-        capacity: classroom.capacity,
-        code: classroom.code,
-        cover: classroom.cover,
-        status: classroom.status,
-        createdAt: classroom.createdAt,
-        updatedAt: classroom.updatedAt,
-        deletedAt: classroom.deletedAt,
-      })
-    );
+    data.forEach((classroom) => classrooms.push(Classroom.fromData(classroom)));
 
     return classrooms;
   }
@@ -41,6 +29,6 @@ export default class ClassroomDataSource implements IClassroomDataSource {
       },
     });
 
-    return newClassroom;
+    return Classroom.fromData(newClassroom);
   }
 }

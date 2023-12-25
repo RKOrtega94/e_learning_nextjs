@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/libs/prisma";
 import {
   SuccessResponse,
   ErrorResponse,
 } from "@/data/interfaces/response.interface";
-import { CreateQuestionnaire } from "@/data/use_cases/_use_cases";
+import {
+  CreateQuestionnaire,
+  GetAllQuestionnaire,
+} from "@/data/use_cases/_use_cases";
 import QuestionnaireRepository from "./../../../data/repository/questionnaire_repository";
 import { QuestionnaireDataSource } from "@/data/data_source/_data_source";
 import { Questionnaire } from "@model/_model";
+
+const getAll = new GetAllQuestionnaire(
+  new QuestionnaireRepository(new QuestionnaireDataSource())
+);
 
 const create = new CreateQuestionnaire(
   new QuestionnaireRepository(new QuestionnaireDataSource())
@@ -15,11 +21,7 @@ const create = new CreateQuestionnaire(
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const questionnaires = await prisma.questionnaire.findMany({
-      include: {
-        questions: true,
-      },
-    });
+    const questionnaires = await getAll.execute();
 
     return NextResponse.json(
       SuccessResponse.json("Questionnaires retrieved", questionnaires)
@@ -56,13 +58,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const questionnaire: Questionnaire = Questionnaire.fromData({
       name: name,
       description: description,
-      classroom: classroom,
+      classroomId: classroomId,
     });
 
     const newQuestionnaire: Questionnaire = await create.execute(questionnaire);
 
     return NextResponse.json(
-      SuccessResponse.json("Questionnaire created", newQuestionnaire)
+      SuccessResponse.json("Questionnaire created", {
+        ...newQuestionnaire,
+        classroom,
+      })
     );
   } catch (error: any) {
     return NextResponse.json(
