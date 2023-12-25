@@ -24,7 +24,7 @@
       "@model/*": ["./src/data/model/*"],
       "@repository/*": ["./src/domain/repository/*", "./src/data/repository/*"],
       "@data-source/*": [
-        "./src/domain/datasourde/*",
+        "./src/domain/datasourse/*",
         "./src/data/data_source/*"
       ],
       "@usecase/*": ["./src/domain/use_cases/*", "./src/data/use_cases/*"]

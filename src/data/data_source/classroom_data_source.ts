@@ -1,4 +1,4 @@
-import { IClassroomDataSource } from "@/domain/datasourde/_data_source";
+import { IClassroomDataSource } from "@/domain/datasourse/_data_source";
 import { PrismaClient } from "@prisma/client";
 import { Classroom } from "@model/_model";
 

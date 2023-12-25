@@ -53,11 +53,12 @@ export async function POST(request: Request): Promise<NextResponse> {
     let capacity: number = Number(data.get("capacity")?.toString()) || 0;
     let cover: File = data.get("cover") as File;
 
-    const classroom: Classroom = new Classroom({
+    const classroom: Classroom = Classroom.fromData({
       name: name,
       capacity: capacity,
       code: generateCode(),
       cover: await parseFileToBase64(cover),
+      status: true,
     });
 
     let newClassroom: Classroom = await create.execute(classroom);

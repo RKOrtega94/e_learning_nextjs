@@ -1,4 +1,4 @@
-import { IClassroomDataSource } from "@/domain/datasourde/_data_source";
+import { IClassroomDataSource } from "@/domain/datasourse/_data_source";
 import Classroom from "@/domain/interface/classroom_interface";
 import { IClassroomRepository } from "@repository/_repositories";
 
