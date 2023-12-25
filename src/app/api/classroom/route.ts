@@ -7,11 +7,14 @@ import {
 } from "@/data/interfaces/response.interface";
 import { parseFileToBase64 } from "@/libs/image_parse";
 import { Classroom } from "@model/_model";
-import { GetAllClassroom } from "@/data/use_cases/_use_cases";
+import { GetAllClassroom, CreateClassroom } from "@/data/use_cases/_use_cases";
 import ClassroomRepository from "@/data/repository/classroom_repository";
 import ClassroomDataSource from "@/data/data_source/classroom_data_source";
 
 const getAll = new GetAllClassroom(
+  new ClassroomRepository(new ClassroomDataSource())
+);
+const create = new CreateClassroom(
   new ClassroomRepository(new ClassroomDataSource())
 );
 
@@ -45,29 +48,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     const data = await request.formData();
-    const image = data.get("file");
 
-    const name = data.get("name")?.toString() || "";
-    // capacity parse to int
-    const capacity = data.get("capacity")?.toString() || "";
+    let name: string = data.get("name")?.toString() || "";
+    let capacity: number = Number(data.get("capacity")?.toString()) || 0;
+    let cover: File = data.get("cover") as File;
 
-    let cover = null;
-
-    if (image) {
-      cover = await parseFileToBase64(image);
-    }
-
-    const classroom = await prisma.classroom.create({
-      data: {
-        code: generateCode(),
-        name: name,
-        capacity: Number(capacity),
-        cover: cover,
-      },
+    const classroom: Classroom = new Classroom({
+      name: name,
+      capacity: capacity,
+      code: generateCode(),
+      cover: await parseFileToBase64(cover),
     });
 
+    let newClassroom: Classroom = await create.execute(classroom);
+
     return NextResponse.json(
-      SuccessResponse.json("Classroom created", classroom)
+      SuccessResponse.json("Classroom created", newClassroom)
     );
   } catch (error: any) {
     return NextResponse.json(

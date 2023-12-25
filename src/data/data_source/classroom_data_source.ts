@@ -30,7 +30,17 @@ export default class ClassroomDataSource implements IClassroomDataSource {
     return classrooms;
   }
 
-  createClassroom(classroom: Classroom): Promise<Classroom> {
-    throw new Error("Method not implemented.");
+  async createClassroom(classroom: Classroom): Promise<Classroom> {
+    let newClassroom = await this.prisma.classroom.create({
+      data: {
+        name: classroom.name,
+        capacity: classroom.capacity,
+        code: classroom.code,
+        cover: classroom.cover,
+        status: classroom.status,
+      },
+    });
+
+    return newClassroom;
   }
 }

@@ -10,9 +10,9 @@ export default class ClassroomRepository implements IClassroomRepository {
   }
 
   getAll(): Promise<Classroom[]> {
-    throw new Error("Method not implemented.");
+    return this._ds.getAllClassrooms();
   }
   create(classroom: Classroom): Promise<Classroom> {
-    throw new Error("Method not implemented.");
+    return this._ds.createClassroom(classroom);
   }
 }

@@ -1,11 +1,11 @@
 export default interface Classroom {
-  id: string;
+  id: string | null;
   name: string;
   capacity: number | null;
   code: string;
   cover: string | null;
   status: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | undefined;
+  updatedAt: Date | undefined;
   deletedAt: Date | null;
 }
