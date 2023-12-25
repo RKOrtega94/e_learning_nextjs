@@ -1,3 +1,4 @@
 import IClassroom from "./classroom_interface";
+import IQuestionnaire from "./questionnaire_interface";
 
-export { IClassroom };
+export type { IClassroom, IQuestionnaire };
