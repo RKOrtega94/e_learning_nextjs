@@ -7,9 +7,9 @@ import {
   CreateQuestionnaire,
   GetAllQuestionnaire,
 } from "@/data/use_cases/_use_cases";
-import QuestionnaireRepository from "./../../../data/repository/questionnaire_repository";
 import { QuestionnaireDataSource } from "@/data/data_source/_data_source";
 import { Questionnaire } from "@model/_model";
+import { QuestionnaireRepository } from "@/data/repository/_repository";
 
 const getAll = new GetAllQuestionnaire(
   new QuestionnaireRepository(new QuestionnaireDataSource())
