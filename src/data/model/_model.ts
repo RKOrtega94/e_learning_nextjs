@@ -1,4 +1,4 @@
 import Classroom from "./classroom_model";
-import Questionnaire from "./questionnaire_model";
+import QuestionBank from "./question_bank_model";
 
-export { Classroom, Questionnaire };
+export { Classroom, QuestionBank };

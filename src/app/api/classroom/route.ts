@@ -57,7 +57,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       name: name,
       capacity: capacity,
       code: generateCode(),
-      cover: await parseFileToBase64(cover),
+      cover: cover ? await parseFileToBase64(cover) : null,
       status: true,
     });
 

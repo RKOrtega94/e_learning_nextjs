@@ -13,9 +13,6 @@ export async function loadFile({
   path: String;
 }): Promise<string> {
   try {
-    // Create a file reference
-    console.log(file.type);
-
     const storageRef = ref(db, `${path}/${name}.${file.name.split(".").pop()}`);
 
     // create a load file with custom metadata

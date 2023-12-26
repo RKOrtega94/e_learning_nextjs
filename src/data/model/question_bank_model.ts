@@ -1,6 +1,6 @@
 import { IQuestionBank } from "@/domain/interface/_interfaces";
 
-export default class QuestionnaireModel implements IQuestionBank {
+export default class QuestionBankModel implements IQuestionBank {
   id: string | null;
   name: string;
   description: string;
@@ -31,8 +31,8 @@ export default class QuestionnaireModel implements IQuestionBank {
   }
 
   // from data
-  static fromData(data: any): QuestionnaireModel {
-    return new QuestionnaireModel(
+  static fromData(data: any): QuestionBankModel {
+    return new QuestionBankModel(
       data.id,
       data.name,
       data.description,

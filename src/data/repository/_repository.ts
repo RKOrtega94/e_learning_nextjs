@@ -1,4 +1,4 @@
 import ClassroomRepository from "./classroom_repository";
-import QuestionnaireRepository from "./questionnaire_repository";
+import QuestionBankRepository from "./question_bank_repository";
 
-export { ClassroomRepository, QuestionnaireRepository };
+export { ClassroomRepository, QuestionBankRepository };

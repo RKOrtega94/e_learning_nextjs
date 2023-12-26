@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "QuestionType" AS ENUM ('MULTIPLE_CHOICE', 'SINGLE_CHOICE', 'TRUE_FALSE', 'LONG_TEXT', 'SHORT_TEXT', 'ORDER', 'WORD_FINDER', 'MATCHINGF');
+CREATE TYPE "QuestionType" AS ENUM ('SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TRUE_FALSE', 'LONG_TEXT', 'SHORT_TEXT', 'ORDER', 'WORD_FINDER', 'MATCHINGF');
 
 -- CreateTable
 CREATE TABLE "Role" (
@@ -103,7 +103,7 @@ CREATE TABLE "Students" (
 );
 
 -- CreateTable
-CREATE TABLE "Questionnaire" (
+CREATE TABLE "QuestionBank" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
@@ -113,47 +113,19 @@ CREATE TABLE "Questionnaire" (
     "deletedAt" TIMESTAMP(3),
     "classroomId" TEXT NOT NULL,
 
-    CONSTRAINT "Questionnaire_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "QuestionBank_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Question" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
+    "questionType" "QuestionType" NOT NULL,
     "question" TEXT NOT NULL,
-    "type" "QuestionType" NOT NULL,
-    "questionaireId" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "deletedAt" TIMESTAMP(3),
+    "answer" TEXT NOT NULL,
+    "options" TEXT[],
+    "questionBankId" TEXT NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Option" (
-    "id" SERIAL NOT NULL,
-    "option" TEXT NOT NULL,
-    "questionId" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "deletedAt" TIMESTAMP(3),
-
-    CONSTRAINT "Option_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Answer" (
-    "id" SERIAL NOT NULL,
-    "optionId" INTEGER NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "deletedAt" TIMESTAMP(3),
-    "questionId" TEXT,
-
-    CONSTRAINT "Answer_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -187,16 +159,7 @@ ALTER TABLE "Students" ADD CONSTRAINT "Students_classroomId_fkey" FOREIGN KEY ("
 ALTER TABLE "Students" ADD CONSTRAINT "Students_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Questionnaire" ADD CONSTRAINT "Questionnaire_classroomId_fkey" FOREIGN KEY ("classroomId") REFERENCES "Classroom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "QuestionBank" ADD CONSTRAINT "QuestionBank_classroomId_fkey" FOREIGN KEY ("classroomId") REFERENCES "Classroom"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question_questionaireId_fkey" FOREIGN KEY ("questionaireId") REFERENCES "Questionnaire"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Option" ADD CONSTRAINT "Option_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Answer" ADD CONSTRAINT "Answer_optionId_fkey" FOREIGN KEY ("optionId") REFERENCES "Option"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Answer" ADD CONSTRAINT "Answer_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Question" ADD CONSTRAINT "Question_questionBankId_fkey" FOREIGN KEY ("questionBankId") REFERENCES "QuestionBank"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

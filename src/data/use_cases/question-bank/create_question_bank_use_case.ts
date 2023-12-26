@@ -10,7 +10,7 @@ export default class CreateQuestionBankUseCase
   constructor(repository: IQuestionBankRepository) {
     this._repository = repository;
   }
-  async execute(questionnaireData: IQuestionBank): Promise<IQuestionBank> {
-    return await this._repository.create(questionnaireData);
+  async execute(questionBankData: IQuestionBank): Promise<IQuestionBank> {
+    return await this._repository.create(questionBankData);
   }
 }
