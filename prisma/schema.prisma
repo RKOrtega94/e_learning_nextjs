@@ -49,18 +49,18 @@ model UserRoles {
 }
 
 model Classroom {
-  id             String          @id @default(uuid())
-  name           String
-  capacity       Int?
-  code           String
-  cover          String?
-  status         Boolean         @default(true)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  deletedAt      DateTime?
-  resources      Resource[]
-  students       Students[]
-  questionnaires Questionnaire[]
+  id           String         @id @default(uuid())
+  name         String
+  capacity     Int?
+  code         String
+  cover        String?
+  status       Boolean        @default(true)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  deletedAt    DateTime?
+  resources    Resource[]
+  students     Students[]
+  QuestionBank QuestionBank[]
 
   @@unique([name, code], name: "classroom_unique")
 }
@@ -101,17 +101,17 @@ model Students {
   status      Boolean   @default(true)
 }
 
-model Questionnaire {
-  id          String         @id @default(uuid())
+model QuestionBank {
+  id          String     @id @default(uuid())
   name        String
   description String?
-  status      Boolean        @default(true)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  status      Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   deletedAt   DateTime?
-  classroom   Classroom      @relation(fields: [classroomId], references: [id])
+  classroom   Classroom  @relation(fields: [classroomId], references: [id])
   classroomId String
-  questions   QuestionBank[]
+  questions   Question[]
 }
 
 enum QuestionType {
@@ -125,15 +125,12 @@ enum QuestionType {
   MATCHINGF
 }
 
-model QuestionBank {
-  id              Int            @id @default(autoincrement())
-  questionType    QuestionType
-  question        String
-  options         String[]
-  answer          String
-  status          Boolean        @default(true)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  Questionnaire   Questionnaire? @relation(fields: [questionnaireId], references: [id])
-  questionnaireId String?
+model Question {
+  id             Int          @id @default(autoincrement())
+  questionType   QuestionType
+  question       String
+  answer         String
+  options        String[]
+  QuestionBank   QuestionBank @relation(fields: [questionBankId], references: [id])
+  questionBankId String
 }
