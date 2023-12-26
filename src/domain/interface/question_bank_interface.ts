@@ -1,11 +1,10 @@
-export default interface IQuestionBank {
+export default interface QuestionBank {
   id: string | null;
-  questionType: string;
-  question: string;
-  options: string[];
-  answer: string;
+  name: string;
+  description: string;
   status: boolean;
   createdAt: Date | undefined;
   updatedAt: Date | undefined;
-  questionnaireId: string | null;
+  deletedAt: Date | null;
+  classroomId: string;
 }
