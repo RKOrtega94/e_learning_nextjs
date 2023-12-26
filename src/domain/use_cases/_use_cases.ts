@@ -4,13 +4,13 @@
 import ICreateClassroomUseCase from "./classroom/create_classroom_use_case";
 import IGetAllClassroomUseCase from "./classroom/get_all_classroom_use_case";
 
-// Questionnaire use cases
-import ICreateQuestionnaireUseCase from "./questionnaire/create_questionnaire_use_case";
-import IGetAllQuestionnaireUseCase from "./questionnaire/get_all_questionnaire_use_case";
+// Question bank use cases
+import ICreateQuestionBankUseCase from "@/domain/use_cases/question_bank/create_question_bank_use_case";
+import IGetAllQuestionBankUseCase from "@/domain/use_cases/question_bank/get_all_question_bank_use_case";
 
 export {
   ICreateClassroomUseCase,
   IGetAllClassroomUseCase,
-  ICreateQuestionnaireUseCase,
-  IGetAllQuestionnaireUseCase,
+  ICreateQuestionBankUseCase,
+  IGetAllQuestionBankUseCase,
 };
