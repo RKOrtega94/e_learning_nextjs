@@ -129,7 +129,7 @@ model Question {
   id             Int          @id @default(autoincrement())
   questionType   QuestionType
   question       String
-  answer         String
+  answer         String[]
   options        String[]
   QuestionBank   QuestionBank @relation(fields: [questionBankId], references: [id])
   questionBankId String
