@@ -13,7 +13,7 @@ import { QuestionBank } from "@/data/model/_model";
 import { PrismaClient } from "@prisma/client";
 
 export default class QuestionBankService {
-  prisma = new PrismaClient();
+  prisma: PrismaClient = new PrismaClient();
 
   create = new CreateQuestionBank(
     new QuestionBankRepository(new QuestionBankDataSource())

@@ -1,5 +1,10 @@
 export enum QUESTION_TYPES {
-  MULTIPLE_CHOICE = "Multiple Choice",
-  TRUE_FALSE = "True/False",
-  SHORT_ANSWER = "Short Answer",
+  SINGLE_CHOICE,
+  MULTIPLE_CHOICE,
+  TRUE_FALSE,
+  LONG_TEXT,
+  SHORT_TEXT,
+  ORDER,
+  WORD_FINDER,
+  MATCHING,
 }

@@ -10,6 +10,7 @@ import IGetAllQuestionBankUseCase from "@/domain/use_cases/question_bank/get_all
 
 // Question use cases
 import IGetAllQuestionUseCase from "./question/get_all_question_use_case";
+import ICreateQuestionUseCase from "./question/create_question_use_case";
 
 export {
   // Classroom use cases
@@ -19,5 +20,6 @@ export {
   ICreateQuestionBankUseCase,
   IGetAllQuestionBankUseCase,
   // Question use cases
+  ICreateQuestionUseCase,
   IGetAllQuestionUseCase,
 };

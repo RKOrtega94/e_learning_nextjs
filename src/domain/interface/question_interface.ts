@@ -1,8 +1,8 @@
-import { QUESTION_TYPES } from "@/data/enums/_enums";
+import { QuestionType } from "@prisma/client";
 
 export default interface Question {
   id: number | null;
-  questionType: QUESTION_TYPES;
+  questionType: QuestionType;
   question: string;
   answer: string[];
   options: string[];

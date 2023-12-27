@@ -1,9 +1,9 @@
 import { IQuestion } from "@interface/_interfaces";
-import { QUESTION_TYPES } from "../enums/question_type_enum";
+import { QuestionType } from "@prisma/client";
 
 export default class Question implements IQuestion {
   id: number | null;
-  questionType: QUESTION_TYPES;
+  questionType: QuestionType;
   question: string;
   answer: string[];
   options: string[];
@@ -11,7 +11,7 @@ export default class Question implements IQuestion {
 
   constructor(
     id: number | null,
-    questionType: QUESTION_TYPES,
+    questionType: QuestionType,
     question: string,
     answer: string[],
     options: string[],
