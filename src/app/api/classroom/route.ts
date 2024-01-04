@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { generateCode } from "@/libs/generators";
-import { prisma } from "@/libs/prisma";
 import {
   SuccessResponse,
   ErrorResponse,
@@ -25,11 +24,11 @@ const create = new CreateClassroom(
  */
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    let classrooms: Classroom[] = [];
-
-    classrooms = await getAll.execute();
-
-    return NextResponse.json(SuccessResponse.json("Classrooms", classrooms));
+    return getAll.execute().then((classrooms: Classroom[]) => {
+      return NextResponse.json(
+        SuccessResponse.json("Classrooms found", classrooms)
+      );
+    });
   } catch (error: any) {
     return NextResponse.json(
       ErrorResponse.json("Error getting classrooms", [error.message]),
@@ -45,7 +44,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
  *
  * @returns {NextResponse}
  */
-export async function POST(request: Request): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const data = await request.formData();
 
@@ -53,19 +52,21 @@ export async function POST(request: Request): Promise<NextResponse> {
     let capacity: number = Number(data.get("capacity")?.toString()) || 0;
     let cover: File = data.get("cover") as File;
 
-    const classroom: Classroom = Classroom.fromData({
-      name: name,
-      capacity: capacity,
-      code: generateCode(),
-      cover: cover ? await parseFileToBase64(cover) : null,
-      status: true,
-    });
-
-    let newClassroom: Classroom = await create.execute(classroom);
-
-    return NextResponse.json(
-      SuccessResponse.json("Classroom created", newClassroom)
-    );
+    return create
+      .execute(
+        Classroom.fromData({
+          name: name,
+          capacity: capacity,
+          code: generateCode(),
+          cover: cover ? await parseFileToBase64(cover) : null,
+          status: true,
+        })
+      )
+      .then((classroom: Classroom) => {
+        return NextResponse.json(
+          SuccessResponse.json("Classroom created", classroom)
+        );
+      });
   } catch (error: any) {
     return NextResponse.json(
       ErrorResponse.json("Error creating classroom", [error.message]),

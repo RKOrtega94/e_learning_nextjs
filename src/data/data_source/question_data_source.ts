@@ -1,9 +1,9 @@
 import { IQuestionDataSource } from "@/domain/datasourse/_data_source";
 import { Question } from "@model/_model";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, QuestionType } from "@prisma/client";
 
 export default class QuestionDataSource implements IQuestionDataSource {
-  prisma: PrismaClient;
+  private prisma: PrismaClient;
 
   constructor() {
     this.prisma = new PrismaClient();
@@ -18,7 +18,27 @@ export default class QuestionDataSource implements IQuestionDataSource {
 
     return data.map((question) => Question.fromData(question));
   }
-  create(question: Question): Promise<Question> {
-    throw new Error("Method not implemented.");
+
+  async create(question: Question): Promise<Question> {
+    const validQuestionType = question.questionType ?? "SINGLE_CHOICE";
+
+    if (!(validQuestionType in QuestionType)) {
+      throw new Error(`Invalid question type: ${validQuestionType}`);
+    }
+
+    const questionType =
+      QuestionType[validQuestionType as keyof typeof QuestionType];
+
+    const newQuestion: Question = await this.prisma.question.create({
+      data: {
+        questionType,
+        question: question.question,
+        answer: question.answer,
+        options: question.options,
+        questionBankId: question.questionBankId,
+      },
+    });
+
+    return Question.fromData(newQuestion);
   }
 }

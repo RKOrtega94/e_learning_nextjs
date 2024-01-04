@@ -121,7 +121,7 @@ CREATE TABLE "Question" (
     "id" SERIAL NOT NULL,
     "questionType" "QuestionType" NOT NULL,
     "question" TEXT NOT NULL,
-    "answer" TEXT NOT NULL,
+    "answer" TEXT[],
     "options" TEXT[],
     "questionBankId" TEXT NOT NULL,
 

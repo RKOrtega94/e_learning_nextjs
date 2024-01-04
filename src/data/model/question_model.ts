@@ -3,7 +3,7 @@ import { QuestionType } from "@prisma/client";
 
 export default class Question implements IQuestion {
   id: number | null;
-  questionType: QuestionType;
+  questionType: string | null;
   question: string;
   answer: string[];
   options: string[];
@@ -11,7 +11,7 @@ export default class Question implements IQuestion {
 
   constructor(
     id: number | null,
-    questionType: QuestionType,
+    questionType: string | null,
     question: string,
     answer: string[],
     options: string[],
