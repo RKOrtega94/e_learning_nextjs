@@ -11,6 +11,15 @@ interface Params {
   };
 }
 
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  const classrooms = await prisma.classroom.findMany();
+  return classrooms.map((classroom) => ({
+    params: { id: classroom.id.toString() },
+  }));
+}
+
 export async function GET(
   request: Request,
   { params }: Params
