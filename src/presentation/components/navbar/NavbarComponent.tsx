@@ -1,9 +1,10 @@
 import Actions from "./Actions";
+import Links from "./Links";
 import Logo from "./Logo";
 
 const navItems = [{ path: "/home", label: "Home" }];
 
-export default function NavbarComponent() {
+export function NavbarComponent() {
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +14,9 @@ export default function NavbarComponent() {
               <Logo />
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">Links</div>
+              <div className="ml-10 flex items-baseline space-x-4">
+                <Links />
+              </div>
             </div>
           </div>
           <div className="hidden md:block">

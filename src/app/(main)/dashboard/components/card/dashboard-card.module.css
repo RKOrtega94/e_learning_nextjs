@@ -1,0 +1,15 @@
+.primary {
+  @apply bg-blue-500 text-white dark:bg-blue-700 dark:text-white;
+}
+
+.secondary {
+  @apply bg-orange-500 text-white dark:bg-orange-700 dark:text-white;
+}
+
+.tertiary {
+  @apply bg-green-500 text-white dark:bg-green-700 dark:text-white;
+}
+
+.quaternary {
+  @apply bg-red-500 text-white dark:bg-red-700 dark:text-white;
+}
