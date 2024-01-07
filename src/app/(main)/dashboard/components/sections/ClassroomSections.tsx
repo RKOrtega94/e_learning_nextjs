@@ -23,7 +23,6 @@ export default function ClassroomSections() {
         <ClassroomCard />
         <ClassroomCard />
         <ClassroomCard />
-        <ClassroomCard />
       </section>
     </Card>
   );

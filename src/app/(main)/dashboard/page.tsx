@@ -6,7 +6,6 @@ import EvaluationSection from "./components/sections/EvaluationSection";
 export default async function DashboardPage() {
   return (
     <>
-      <CounterSection />
       <div className="w-full flex flex-col md:flex-row gap-4 my-4">
         <section className="w-full md:w-3/4 sm:w-full">
           <ClassroomSections />
