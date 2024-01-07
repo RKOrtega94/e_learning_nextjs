@@ -2,9 +2,9 @@ import Link from "next/link";
 import NavLink from "./NavLink";
 
 const links = [
-  { path: "/", label: "Home" },
-  { path: "/classrooms", label: "Classrooms" },
-  { path: "/Tasks", label: "Tasks" },
+  { path: "/dashboard", label: "Home" },
+  { path: "/classroom", label: "Classrooms" },
+  { path: "/chat", label: "Chat" },
 ];
 
 export default function Links() {

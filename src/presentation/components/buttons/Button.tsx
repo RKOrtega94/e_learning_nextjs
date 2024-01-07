@@ -8,6 +8,8 @@ interface ButtonProps {
 
 export function Button(props: ButtonProps) {
   return (
-    <button className={`btn`}>{props.children ?? "Button content"}</button>
+    <button className={`btn ${props.className}`}>
+      {props.children ?? "Button content"}
+    </button>
   );
 }

@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 const navItems = [{ path: "/home", label: "Home" }];
 
-export function NavbarComponent() {
+export  function NavbarComponent() {
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
