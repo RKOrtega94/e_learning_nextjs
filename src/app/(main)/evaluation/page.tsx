@@ -1,4 +1,4 @@
-export default function ClassroomPage() {
+export default function EvaluationPage() {
   return (
     <div>
       <h1>Hello Page</h1>
