@@ -1,0 +1,23 @@
+.sidebar-layout {
+  @apply h-full p-0 md:p-4;
+}
+
+.sidebar {
+  @apply h-full bg-white rounded-none md:rounded-lg flex flex-col gap-4 dark:bg-gray-800 dark:text-gray-200 p-4;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    @apply w-full absolute z-10 rounded-none md:rounded-lg hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    @apply w-64;
+  }
+}
+
+.divider {
+  @apply border-b border-gray-200 dark:border-gray-700;
+}
