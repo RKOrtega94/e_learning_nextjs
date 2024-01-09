@@ -67,7 +67,7 @@ body {
 
 @media (min-width: 768px) {
   .main {
-    @apply w-full p-4;
+    @apply w-full;
   }
 }
 

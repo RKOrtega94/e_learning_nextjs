@@ -1,9 +1,9 @@
 .sidebar-layout {
-  @apply h-full p-0 md:p-4;
+  @apply h-full;
 }
 
 .sidebar {
-  @apply h-full bg-white rounded-none md:rounded-lg flex flex-col gap-4 dark:bg-gray-800 dark:text-gray-200 p-4;
+  @apply h-full bg-white rounded-lg flex flex-col gap-4 dark:bg-gray-800 dark:text-gray-200 p-4;
 }
 
 @media (max-width: 767px) {
