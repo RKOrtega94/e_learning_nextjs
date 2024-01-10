@@ -14,7 +14,7 @@ const links = [
   },
   {
     path: "/classrooms",
-    label: "Courses",
+    label: "Classrooms",
     icon: <SiGoogleclassroom />,
   },
   {

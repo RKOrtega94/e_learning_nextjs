@@ -10,6 +10,7 @@ export default function MainLayout({
       <Sidebar />
       <section className="main">
         <Appbar />
+        {children}
       </section>
     </main>
   );
