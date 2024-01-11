@@ -1,11 +1,12 @@
 import Style from "./Appbar.module.css";
+import { Breadcrumb, BurgerMenu } from "@/components";
 
 export const Appbar = () => {
   return (
     <nav className={Style.appbar}>
       <section className="flex gap-2">
-        <h1>Logo</h1>
-        <span>breadcrumb</span>
+        <BurgerMenu />
+        <Breadcrumb />
       </section>
       <section className="flex gap-2">
         <span>notifications</span>
