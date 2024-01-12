@@ -1,17 +1,15 @@
+"use client";
+
 interface IconButtonProps {
-  children: React.ReactNode;
+  icon: React.ReactNode;
   onClick: () => void;
   className?: string;
 }
 
-export const IconButton = ({
-  children,
-  onClick,
-  className,
-}: IconButtonProps) => {
+export const IconButton = ({ icon, onClick, className }: IconButtonProps) => {
   return (
     <button className={className} onClick={onClick}>
-      {children}
+      {icon}
     </button>
   );
 };

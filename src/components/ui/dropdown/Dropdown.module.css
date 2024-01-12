@@ -1,0 +1,11 @@
+.dropdown-container {
+  @apply relative flex flex-col items-center justify-center w-full px-4  text-center;
+}
+
+.dropdown-button {
+  @apply relative inline-flex items-center justify-center text-sm font-medium leading-5 text-white transition duration-150 ease-in-out;
+}
+
+.dropdown-content {
+  @apply absolute left-0 top-full hidden z-10 w-full mt-2 overflow-hidden bg-white rounded-lg shadow-lg;
+}
